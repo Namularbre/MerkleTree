@@ -21,6 +21,8 @@ public static class MerkleHasher
     /// <exception cref="ArgumentNullException"><paramref name="rawData"/> is <see langword="null"/>.</exception>
     public static byte[] LeafHash(string rawData)
     {
+        ArgumentNullException.ThrowIfNull(rawData);
+
         byte[] data = Encoding.UTF8.GetBytes(rawData);
         byte[] buf = new byte[1 + data.Length];
         buf[0] = 0x00;
@@ -37,6 +39,9 @@ public static class MerkleHasher
     /// <exception cref="ArgumentNullException"><paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
     public static byte[] NodeHash(byte[] left, byte[] right)
     {
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
+
         byte[] buf = new byte[1 + left.Length + right.Length];
         buf[0] = 0x01;
         left.CopyTo(buf, 1);
@@ -69,6 +74,7 @@ public static class MerkleHasher
     /// </exception>
     public static byte[] SubtreeHash(IReadOnlyList<string> logs, int start, int numberOfLeavesInRange)
     {
+        ArgumentNullException.ThrowIfNull(logs);
         ArgumentOutOfRangeException.ThrowIfNegative(start);
         ArgumentOutOfRangeException.ThrowIfNegative(numberOfLeavesInRange);
 
